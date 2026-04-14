@@ -1,0 +1,30 @@
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.19
+
+# Agent framework
+agno==1.1.7
+
+# Model SDKs (agno uses these)
+openai>=1.57.0
+anthropic>=0.40.0
+google-genai>=0.3.0
+
+# Web vision / scraping
+agent-reach @ git+https://github.com/Panniantong/Agent-Reach.git
+playwright>=1.49.0
+beautifulsoup4>=4.12.3
+lxml>=5.3.0
+httpx>=0.28.0
+pillow>=11.0.0
+
+# Data
+supabase>=2.10.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+
+# Utils
+python-dotenv>=1.0.1
+loguru>=0.7.2
+tenacity>=9.0.0

@@ -1,0 +1,10 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "env": {
+    "NEXT_PUBLIC_API_BASE_URL": "@troopod_api_base_url",
+    "NEXT_PUBLIC_SUPABASE_URL": "@troopod_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@troopod_supabase_anon_key"
+  }
+}

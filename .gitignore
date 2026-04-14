@@ -1,0 +1,30 @@
+# Python
+api/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Node
+web/node_modules/
+web/.next/
+web/out/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Analysis scratch (cloned upstream repos)
+.analysis/
+
+# OS
+.DS_Store
+
+# Playwright
+/api/playwright-report/
+/api/test-results/
+
+# Runtime logs (may contain request/response data)
+api/logs/
+web/logs/
