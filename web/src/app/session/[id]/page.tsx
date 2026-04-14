@@ -13,6 +13,15 @@ type SessionRow = {
 
 type ChatMsg = { id: number | string; role: "user" | "assistant"; content: string; created_at?: string };
 
+// Iframe / <img> content is large (scraped HTML, screenshots). On Vercel,
+// routing these through the `/api/*` rewrite can hit edge payload limits
+// and truncate the response. In production we talk to Railway directly;
+// locally we continue to use the rewrite (which points at localhost:8000).
+const API_DIRECT = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+function apiUrl(path: string): string {
+  return API_DIRECT ? `${API_DIRECT}${path}` : `/api${path}`;
+}
+
 // Merge helper: accepts optimistic items (id starting with "tmp-") and
 // de-dupes by id. Real rows from the DB replace matching tmp rows by content.
 function mergeByIdOrTempKey(a: ChatMsg[], b: ChatMsg[]): ChatMsg[] {
@@ -190,12 +199,9 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
             </div>
           )}
           {view === "original" && ready ? (
-            // Show the ground-truth screenshot captured at scrape time. More
-            // reliable than iframing the page HTML (animations/hydration-
-            // only content break, cross-origin fonts fail in some browsers).
             <img
               key={`orig-${id}`}
-              src={`/api/render/${id}/original.png`}
+              src={apiUrl(`/render/${id}/original.png`)}
               alt="Original landing page"
               className="h-full w-full object-contain object-top bg-white"
             />
@@ -204,7 +210,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               key={`${view}-${version}`}
               title="Rendered landing"
               className="h-full w-full"
-              src={ready ? `/api/render/${id}?v=${version}` : "about:blank"}
+              src={ready ? apiUrl(`/render/${id}?v=${version}`) : "about:blank"}
             />
           )}
         </div>
