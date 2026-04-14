@@ -24,11 +24,6 @@ RUN python -m playwright install --with-deps chromium
 # Application code (app/ only — tests, logs, venv, .env are .dockerignore'd).
 COPY app ./app
 
-# Non-root for safety.
-RUN useradd --create-home --uid 1000 troopod \
- && chown -R troopod:troopod /app
-USER troopod
-
 # Railway sets PORT; locally defaults to 8000.
 ENV PORT=8000
 EXPOSE 8000
