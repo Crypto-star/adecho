@@ -13,6 +13,21 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     LOG_TO_STDOUT=1
 
+# Install modern web fonts so headless Chromium's screenshots match what the
+# Critic expects (Linear, Stripe, Notion all use Inter-ish geometric sans).
+# Without these, font-family: "Inter" falls back to DejaVu and screenshots
+# look jarring → Critic scores low even when the DOM is correct.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      fonts-inter \
+      fonts-firacode \
+      fonts-noto \
+      fonts-noto-cjk \
+      fonts-noto-color-emoji \
+      fonts-roboto \
+      fonts-dejavu-core \
+    && rm -rf /var/lib/apt/lists/* \
+    && fc-cache -f
+
 # Install Python deps first so requirements changes don't bust the Chromium layer.
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
